@@ -167,7 +167,7 @@
 
   /* Custom breakpoint */
   --breakpoint-xs: 376px;
-  --breakpoint-sm: 481px;
+  --breakpoint-sm: 480px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;

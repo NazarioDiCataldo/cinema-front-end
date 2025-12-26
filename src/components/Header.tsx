@@ -43,7 +43,7 @@ const Header = () => {
         to={element.href}
         className={({ isActive }) => {
           return cn(
-            "cursor-pointer text-xl hover:text-blue-300 duration-300",
+            "cursor-pointer hover:text-blue-300 duration-300",
             isActive && "text-primary font-semibold underline"
           );
         }}
@@ -54,7 +54,7 @@ const Header = () => {
   }
 
   return (
-    <header className="border-b border-gray-100">
+    <header className="border-b border-secondary">
       <div className="container p-4 flex items-center justify-between">
         <Link to={"/"} className="block size-12">
           <picture>
