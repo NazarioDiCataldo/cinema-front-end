@@ -2,7 +2,7 @@ import { Github, Globe, Instagram } from "lucide-react"
 
 const Footer = () => {
   return (
-    <footer className='w-full bg-blue-950'>
+    <footer className='w-full bg-blue-950 mt-8'>
         <div className='container p-4 flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-4 text-secondary'>
             <p className='text-center'>
                 Copyright © {new Date().getFullYear()}. Nazario Di Cataldo. Progetto realizzato per fini scolastici

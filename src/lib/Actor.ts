@@ -8,10 +8,35 @@ export type ActorType = {
   updated_at?: string;
 };
 
+type ActorParams = {
+    limit?: number;
+    order?: 'ASC' | 'DESC',
+    order_by?: string,
+    nationality?: string,
+    birth_year_from?: number,
+    birth_year_to?: number,
+    name?: number  
+}
+
 export class Actor {
   //Get all actors
-  static async get() {
-    const res = await fetch(import.meta.env.VITE_ACTORS_URL);
+  static async get(params: ActorParams = {}) {
+
+    const queryParams = [];
+
+    //Verifico se ci sono dei parametri
+    if(Object.keys(params).length) {
+        for(const [key, value] of Object.entries(params)) {
+            //Mi creo l'array di query params
+            queryParams.push(`${key}=${value}`);
+        }
+    }
+
+    //Verifico se ci sono query params
+    //Se ci sono, all'URL aggiungo tutti i query params tramite join
+    const url = queryParams.length ? `${import.meta.env.VITE_ACTORS_URL}?${queryParams.join('&')}` : `${import.meta.env.VITE_ACTORS_URL}`;
+
+    const res = await fetch(url);
     const resJson = await res.json();
 
     return resJson.data;
