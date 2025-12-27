@@ -1,26 +1,30 @@
-export type ActorType = {
+export type MovieType = {
   id: number;
-  name: string;
-  birth_year: number;
+  title: string;
+  production_year: number;
   nationality: string;
+  director: string;
+  genre: string;
   image_path: string;
   created_at: string;
   updated_at?: string;
 };
 
-type ActorParams = {
+type MovieParams = {
     limit?: number;
     order?: 'ASC' | 'DESC',
     order_by?: string,
     nationality?: string,
-    birth_year_from?: number,
-    birth_year_to?: number,
-    name?: string  
+    production_year_from?: number,
+    production_year_to?: number,
+    title?: string,
+    director?: string,
+    genre?: string,  
 }
 
-export class Actor {
-  //Get all actors
-  static async get(params: ActorParams = {}) {
+export class Movie {
+  //Get all movies
+  static async get(params: MovieParams = {}) {
 
     const queryParams = [];
 
@@ -34,7 +38,7 @@ export class Actor {
 
     //Verifico se ci sono query params
     //Se ci sono, all'URL aggiungo tutti i query params tramite join
-    const url = queryParams.length ? `${import.meta.env.VITE_ACTORS_URL}?${queryParams.join('&')}` : `${import.meta.env.VITE_ACTORS_URL}`;
+    const url = queryParams.length ? `${import.meta.env.VITE_MOVIES_URL}?${queryParams.join('&')}` : `${import.meta.env.VITE_MOVIES_URL}`;
 
     const res = await fetch(url);
     const resJson = await res.json();
@@ -43,18 +47,18 @@ export class Actor {
   }
 
   static async single(id: string) {
-    const res = await fetch(`${import.meta.env.VITE_ACTORS_URL}/${id}`);
+    const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/${id}`);
     const resJson = await res.json();
 
     if (!resJson.success) {
-      throw new Error("Actor not found");
+      throw new Error("Movie not found");
     }
 
     return resJson.data;
   }
 
   static async create(data: object) {
-    const res = await fetch(import.meta.env.VITE_ACTORS_URL, {
+    const res = await fetch(import.meta.env.VITE_MOVIES_URL, {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
@@ -65,7 +69,7 @@ export class Actor {
   }
 
   static async update(id: number, data: object) {
-    const res = await fetch(`${import.meta.env.VITE_ACTORS_URL}/${id}`, {
+    const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/${id}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
@@ -76,7 +80,7 @@ export class Actor {
   }
 
   static async delete(id: number) {
-    const res = await fetch(`${import.meta.env.VITE_ACTORS_URL}/${id}`, {
+    const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/${id}`, {
       method: "DELETE",
     });
     const resJson = await res.json();
