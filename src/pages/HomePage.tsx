@@ -3,7 +3,7 @@ import LastContent from '@/components/LastContent'
 
 const HomePage = () => {
   return (
-    <main className='bg-gray-100'>
+    <main className='pb-8'>
         <Hero />
         <LastContent name='actors' limit={5} order='DESC' />
         <LastContent name='movies' limit={5} order='DESC' />

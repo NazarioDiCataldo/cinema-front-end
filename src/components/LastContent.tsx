@@ -39,7 +39,7 @@ const LastContent = ({ name, limit, order }: LastContentProps) => {
 
   return (
     <section className="container mt-8 flex flex-col gap-4">
-      <h2 className="text-primary text-3xl font-semibold">
+      <h2 className="text-primary text-3xl font-semibold text-center lg:text-left">
         Last {name} loaded
       </h2>
       {list.length ? (
@@ -66,7 +66,7 @@ const LastContent = ({ name, limit, order }: LastContentProps) => {
                             src={elem.image_path}
                           />
                         </picture>
-                        <h3 className="text-xl text-primary font-semibold p-6">
+                        <h3 className="text-xl text-primary text-center lg:text-left font-semibold p-6">
                           {elem.name ?? elem.title}
                         </h3>
                       </CardContent>

@@ -54,7 +54,7 @@ const Header = () => {
   }
 
   return (
-    <header className="border-b border-secondary">
+    <header className="border-b border-secondary bg-white">
       <div className="container p-4 flex items-center justify-between">
         <Link to={"/"} className="block size-12">
           <picture>
