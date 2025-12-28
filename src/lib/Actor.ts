@@ -39,6 +39,8 @@ export class Actor {
     const res = await fetch(url);
     const resJson = await res.json();
 
+    console.log(resJson);
+
     return resJson.data;
   }
 
