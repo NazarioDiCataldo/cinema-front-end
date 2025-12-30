@@ -15,10 +15,10 @@ const Filters = ({form, applied, clear}: FiltersProps) => {
       <AlertDialogTrigger className='w-full lg:w-max shadow-xl border-0 outline-0'>
         <Button variant="default" size={"lg"} className='w-full' >
           <Filter />
-          Apply filters {applied > 0 ? `(${applied})` : ''}
+          Filters {applied > 0 ? `(${applied})` : ''}
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className='max-w-none'>
         <AlertDialogHeader className='flex justify-between'>
           <AlertDialogTitle className='text-2xl text-primary font-semibold mb-4'>Filter by</AlertDialogTitle>
           <AlertDialogCancel className='border-0 shadow-none rounded-full' >

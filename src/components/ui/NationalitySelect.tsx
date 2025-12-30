@@ -72,12 +72,12 @@ export function NationalitySelect({name, defaultValue, onSelect}: NationaltySele
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger>
+      <PopoverTrigger className='w-full'>
         <Button
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-50 justify-between"
+          className="w-full justify-between"
         >
           {value
             ? countries.find((country) => country.value === value)?.label

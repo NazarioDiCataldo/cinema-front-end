@@ -23,7 +23,7 @@ const YearsSelect = ({ years, name, defaultValue, onSelect }: YearsSelectProps) 
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-50 justify-between px-3"
+          className="w-full justify-between px-3"
         >
           {!value ? 'Search...' : value}
           <ChevronsUpDown className="opacity-50" />

@@ -178,8 +178,8 @@ body {
   @apply bg-gray-100;
 }
 
-body #root {
-  @apply flex flex-col gap-8;
+body main {
+  @apply flex flex-col gap-8 mb-16;
 }
 
 .container {

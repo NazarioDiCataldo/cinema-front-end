@@ -54,7 +54,7 @@ const ActorFilters = ({ params, setParams }: ActorFiltersProps) => {
       onSubmit={applyFilters}
       id="actorsFilters"
     >
-      <div className="flex gap-4">
+      <div className="flex flex-col md:flex-row w-full gap-4">
         {/* Da */}
         <YearsSelect
           years={yearsList}
