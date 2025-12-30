@@ -8,7 +8,7 @@ export type ActorType = {
   updated_at?: string;
 };
 
-type ActorParams = {
+export type ActorParams = {
     limit?: number;
     order?: 'ASC' | 'DESC',
     order_by?: string,
@@ -38,9 +38,7 @@ export class Actor {
 
     const res = await fetch(url);
     const resJson = await res.json();
-
-    console.log(resJson);
-
+    
     return resJson.data;
   }
 
