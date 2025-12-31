@@ -11,7 +11,7 @@ export type ActorType = {
 export type ActorParams = {
     limit?: number;
     order?: 'ASC' | 'DESC',
-    order_by?: string,
+    order_by?: 'id' | 'name',
     nationality?: string,
     birth_year_from?: number,
     birth_year_to?: number,

@@ -3,6 +3,7 @@ import Filters from "@/components/Filters";
 import Grid, { SkeletonGrid } from "@/components/Grid";
 import NotFound from "@/components/NotFound";
 import SearchBar from "@/components/SearchBar";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Actor, type ActorParams, type ActorType } from "@/lib/Actor";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
@@ -10,43 +11,38 @@ import { useSearchParams } from "react-router";
 const ActorsPage = () => {
   const [actors, setActors] = useState<ActorType[]>([]);
   const [loader, setLoader] = useState<boolean>(true);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams({
+    order: 'ASC',
+    order_by: 'id'
+  });
 
   //Converto da URL a oggetto di tipo ActorParams
-  const params = Object.fromEntries(searchParams.entries()) as ActorParams;
-
-  console.log(params);
+  const params: ActorParams = Object.fromEntries(searchParams.entries()) as ActorParams;
 
   //Funzione che aggiorna la griglia di attori quando l'utente imposta dei filtri
   useEffect(() => {
-
     setLoader(true);
 
     Actor.get(params).then((actors) => {
       setActors(actors);
       setLoader(false);
     });
-
   }, [searchParams]);
 
   //Funzione che rimuove tutti i filtri
   function clearFilters(): void {
-
     //Verifico se il parametro name sia impostato
-    if(!searchParams.get('name')) {
-      //Se non lo è, rimuovo tutti i filtri
-      setSearchParams({})
-    } else {
-      //Altrimentri mi salvo il valore vecchio del name, mi creo un nuovo oggetto e gli il vecchio valore che sarà sovrascritto al searchParams precedente
-      const prev = searchParams.get('name');
+    const prev = searchParams.get("name");
+      const prev_1 = searchParams.get("order");
+      const prev_2 = searchParams.get("order_by");
       const next = new URLSearchParams();
-      next.set('name', prev!);
+      if(prev) next.set("name", prev);
+      if(prev_1) next.set("order", prev_1);
+      if(prev_2) next.set("order_by", prev_2);
       setSearchParams(next);
-    }
   }
 
   function searchActor(value: string): void {
-
     //Mi prendo il valore precedente
     setSearchParams((prev) => {
       //Mi creo un nuovo oggetto usando i query string disponbili
@@ -64,7 +60,25 @@ const ActorsPage = () => {
       //Ritorno il nuovo oggetto
       return next;
     });
+  }
 
+  function orderBy(value: string): void {
+    //Gli ordini arrivano in questo formato nome_colonna:ordine
+    //Splitto in base al divisore :
+    //Destructuring per prendermi i due valori separati
+    const [col, order] = value.split(':');
+
+    setSearchParams((prev) => {
+      //Mi creo un nuovo oggetto usando i query string disponbili
+      const next = new URLSearchParams(prev);
+
+      //Due set, uno per il nome della colonne e uno per l'ordine
+      next.set("order_by", col);
+      next.set('order', order.toUpperCase());
+
+      //Ritorno il nuovo oggetto
+      return next;
+    });
   }
 
   return (
@@ -76,9 +90,19 @@ const ActorsPage = () => {
         <p className="text-center lg:text-left">{actors.length} actors found</p>
         <Filters
           clear={clearFilters}
-          applied={Object.keys(params).filter(elem => elem !== 'name').length}
+          applied={Object.keys(params).filter((elem) => elem !== "name" && elem !== "order" && elem !== "order_by" ).length}
           form={<ActorFilters params={params} setParams={setSearchParams} />}
         />
+        <Select onValueChange={orderBy} >
+          <SelectTrigger className="w-full lg:w-50">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+              <SelectItem  value="id:asc">Default order</SelectItem>
+              <SelectItem value="name:asc">Ascending order</SelectItem>
+              <SelectItem value="name:desc">Descending order</SelectItem>
+          </SelectContent>
+        </Select>
         <SearchBar onChange={searchActor} defaultValue={params.name} />
       </div>
 
