@@ -17,41 +17,31 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useEffect } from "react";
-import { Actor } from "@/lib/Actor";
 import { Movie } from "@/lib/Movie";
 
-type NationaltySelectProps = {
+type DirectorSelectProps = {
   id: string;
   name: string;
-  selector: 'movies' | 'actors';
   defaultValue?: string;
   onSelect: (value: string, name: string) => void;
 };
 
-type country = {
-  nationality: string;
+type director = {
+  director: string;
 };
 
-export function NationalitySelect({
+export function DirectorSelect({
   id,
   name,
   defaultValue,
-  selector,
   onSelect,
-}: NationaltySelectProps) {
+}: DirectorSelectProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<string>(defaultValue ?? "");
-  const [countries, setCountries] = React.useState<country[]>([]);
+  const [directors, setDirectors] = React.useState<director[]>([]);
 
   useEffect(() => {
-    switch (selector) {
-      case "actors":
-        Actor.nationalities().then((nat) => setCountries(nat));
-        break;
-      case "movies":
-        Movie.nationalities().then((nat) => setCountries(nat));
-        break;
-    }
+    Movie.directors().then((dir) => setDirectors(dir));
   }, []);
 
   return (
@@ -64,31 +54,31 @@ export function NationalitySelect({
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {value ? value : "Select country..."}
+          {value ? value : "Select director..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search country..." className="h-10" />
+          <CommandInput placeholder="Search director..." className="h-10" />
           <CommandList>
-            <CommandEmpty>No country found.</CommandEmpty>
+            <CommandEmpty>No director found.</CommandEmpty>
             <CommandGroup>
-              {countries.map((country) => (
+              {directors.map((director) => (
                 <CommandItem
-                  key={country.nationality}
-                  value={country.nationality}
+                  key={director.director}
+                  value={director.director}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
                     onSelect(currentValue, name);
                     setOpen(false);
                   }}
                 >
-                  {country.nationality}
+                  {director.director}
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === country.nationality
+                      value === director.director
                         ? "opacity-100"
                         : "opacity-0"
                     )}

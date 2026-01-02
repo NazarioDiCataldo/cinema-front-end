@@ -5,11 +5,12 @@ import { Filter, X } from 'lucide-react'
 
 type FiltersProps = {
   form: JSX.Element;
+  submit: 'actorFilters' | 'movieFilters' | 'hallFilters';
   clear: () => void;
   applied: number;
 }
 
-const Filters = ({form, applied, clear}: FiltersProps) => {
+const Filters = ({form, applied, submit, clear}: FiltersProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger className='w-full lg:w-max shadow-xl border-0 outline-0'>
@@ -28,7 +29,7 @@ const Filters = ({form, applied, clear}: FiltersProps) => {
         {form}
         <AlertDialogFooter>
           <AlertDialogCancel size={"lg"} className='shadow-xl' onClick={clear} >Clear filters</AlertDialogCancel>
-          <AlertDialogAction form='actorsFilters' type={'submit'} size={"lg"} className='shadow-xl' >Apply Filters</AlertDialogAction>
+          <AlertDialogAction form={submit} type={'submit'} size={"lg"} className='shadow-xl' >Apply Filters</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

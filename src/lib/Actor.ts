@@ -42,6 +42,17 @@ export class Actor {
     return resJson.data;
   }
 
+  static async nationalities() {
+    const res = await fetch(`${import.meta.env.VITE_ACTORS_URL}/nationalities`);
+    const resJson = await res.json();
+
+    if (!resJson.success) {
+      throw new Error("An error occured");
+    }
+
+    return resJson.data;
+  }
+
   static async single(id: string) {
     const res = await fetch(`${import.meta.env.VITE_ACTORS_URL}/${id}`);
     const resJson = await res.json();

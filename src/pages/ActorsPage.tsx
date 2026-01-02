@@ -3,7 +3,13 @@ import Filters from "@/components/Filters";
 import Grid, { SkeletonGrid } from "@/components/Grid";
 import NotFound from "@/components/NotFound";
 import SearchBar from "@/components/SearchBar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Actor, type ActorParams, type ActorType } from "@/lib/Actor";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
@@ -12,12 +18,14 @@ const ActorsPage = () => {
   const [actors, setActors] = useState<ActorType[]>([]);
   const [loader, setLoader] = useState<boolean>(true);
   const [searchParams, setSearchParams] = useSearchParams({
-    order: 'ASC',
-    order_by: 'id'
+    order: "ASC",
+    order_by: "id",
   });
 
   //Converto da URL a oggetto di tipo ActorParams
-  const params: ActorParams = Object.fromEntries(searchParams.entries()) as ActorParams;
+  const params: ActorParams = Object.fromEntries(
+    searchParams.entries()
+  ) as ActorParams;
 
   //Funzione che aggiorna la griglia di attori quando l'utente imposta dei filtri
   useEffect(() => {
@@ -32,14 +40,15 @@ const ActorsPage = () => {
   //Funzione che rimuove tutti i filtri
   function clearFilters(): void {
     //Verifico se il parametro name sia impostato
-    const prev = searchParams.get("name");
-      const prev_1 = searchParams.get("order");
-      const prev_2 = searchParams.get("order_by");
-      const next = new URLSearchParams();
-      if(prev) next.set("name", prev);
-      if(prev_1) next.set("order", prev_1);
-      if(prev_2) next.set("order_by", prev_2);
-      setSearchParams(next);
+    const name = searchParams.get("name");
+    const order = searchParams.get("order");
+    const order_by = searchParams.get("order_by");
+
+    const next = new URLSearchParams();
+    if (name) next.set("name", name);
+    if (order) next.set("order", order);
+    if (order_by) next.set("order_by", order_by);
+    setSearchParams(next);
   }
 
   function searchActor(value: string): void {
@@ -66,7 +75,7 @@ const ActorsPage = () => {
     //Gli ordini arrivano in questo formato nome_colonna:ordine
     //Splitto in base al divisore :
     //Destructuring per prendermi i due valori separati
-    const [col, order] = value.split(':');
+    const [col, order] = value.split(":");
 
     setSearchParams((prev) => {
       //Mi creo un nuovo oggetto usando i query string disponbili
@@ -74,7 +83,7 @@ const ActorsPage = () => {
 
       //Due set, uno per il nome della colonne e uno per l'ordine
       next.set("order_by", col);
-      next.set('order', order.toUpperCase());
+      next.set("order", order.toUpperCase());
 
       //Ritorno il nuovo oggetto
       return next;
@@ -86,25 +95,31 @@ const ActorsPage = () => {
       <h1 className="text-4xl font-semibold text-primary text-center lg:text-left">
         All actors
       </h1>
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-center">
+      <section className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-center">
         <p className="text-center lg:text-left">{actors.length} actors found</p>
         <Filters
+          submit={'actorFilters'}
           clear={clearFilters}
-          applied={Object.keys(params).filter((elem) => elem !== "name" && elem !== "order" && elem !== "order_by" ).length}
+          applied={
+            Object.keys(params).filter(
+              (elem) =>
+                elem !== "name" && elem !== "order" && elem !== "order_by"
+            ).length
+          }
           form={<ActorFilters params={params} setParams={setSearchParams} />}
         />
-        <Select onValueChange={orderBy} >
+        <Select onValueChange={orderBy}>
           <SelectTrigger className="w-full lg:w-50">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-              <SelectItem  value="id:asc">Default order</SelectItem>
-              <SelectItem value="name:asc">Ascending order</SelectItem>
-              <SelectItem value="name:desc">Descending order</SelectItem>
+            <SelectItem value="id:asc">Default order</SelectItem>
+            <SelectItem value="name:asc">Ascending order</SelectItem>
+            <SelectItem value="name:desc">Descending order</SelectItem>
           </SelectContent>
         </Select>
         <SearchBar onChange={searchActor} defaultValue={params.name} />
-      </div>
+      </section>
 
       {/* Se la lista non viene ancora caricata, mostro lo skeleton come placeholder */}
       {loader && <SkeletonGrid iteration={8} />}

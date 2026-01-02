@@ -10,7 +10,7 @@ export type MovieType = {
   updated_at?: string;
 };
 
-type MovieParams = {
+export type MovieParams = {
     limit?: number;
     order?: 'ASC' | 'DESC',
     order_by?: string,
@@ -42,6 +42,72 @@ export class Movie {
 
     const res = await fetch(url);
     const resJson = await res.json();
+
+    return resJson.data;
+  }
+
+  static async nationalities() {
+    const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/nationalities`);
+    const resJson = await res.json();
+
+    if (!resJson.success) {
+      throw new Error("An error occured");
+    }
+
+    return resJson.data;
+  }
+
+  static async minYear() {
+    const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/min_production_year`);
+    const resJson = await res.json();
+
+    if (!resJson.success) {
+      throw new Error("An error occured");
+    }
+
+    return resJson.data;
+  }
+
+  static async maxYear() { 
+      const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/max_production_year`);
+      const resJson = await res.json();
+
+      if (!resJson.success) {
+        throw new Error("An error occured");
+      }
+
+      return resJson.data;
+  }
+
+  //Funzione che raccoglie il massimo e il minimo degli anno di produzione e restituise un array
+  static async rangeYear() {
+    const minYear: {min: number} = await Movie.minYear();
+    const maxYear: {max: number} = await Movie.maxYear();
+
+    return {
+      ...minYear,
+      ...maxYear,
+    }
+  }
+
+  static async genres() {
+    const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/genres`);
+    const resJson = await res.json();
+
+    if (!resJson.success) {
+      throw new Error("An error occured");
+    }
+
+    return resJson.data;
+  }
+
+  static async directors() {
+    const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/directors`);
+    const resJson = await res.json();
+
+    if (!resJson.success) {
+      throw new Error("An error occured");
+    }
 
     return resJson.data;
   }

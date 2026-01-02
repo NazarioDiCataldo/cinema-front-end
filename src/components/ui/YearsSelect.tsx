@@ -18,7 +18,7 @@ const YearsSelect = ({ years, name, defaultValue, onSelect }: YearsSelectProps) 
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger>
+      <PopoverTrigger className='w-full'>
         <Button
           variant="outline"
           role="combobox"

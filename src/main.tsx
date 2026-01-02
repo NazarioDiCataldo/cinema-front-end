@@ -7,6 +7,7 @@ import WebSiteLayout from "./layouts/WebSiteLayout";
 import HomePage from "./pages/HomePage";
 import ActorsPage from "./pages/ActorsPage";
 import SingleActorPage from "./pages/SingleActorPage";
+import MoviesPage from "./pages/MoviesPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,15 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: '/movies',
+        children: [
+          {
+            index: true,
+            element: <MoviesPage />
+          }
+        ]
+      }
     ],
   },
 ]);

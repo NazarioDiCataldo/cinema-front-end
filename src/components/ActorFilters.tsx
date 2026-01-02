@@ -72,6 +72,7 @@ const ActorFilters = ({ params, setParams }: ActorFiltersProps) => {
       </div>
       {/* Nazionalità */}
       <NationalitySelect
+        selector={'actors'}
         name={"nationality"}
         defaultValue={params["nationality"]}
         onSelect={addParam}

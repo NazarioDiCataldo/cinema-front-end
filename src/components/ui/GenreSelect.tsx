@@ -17,41 +17,31 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useEffect } from "react";
-import { Actor } from "@/lib/Actor";
 import { Movie } from "@/lib/Movie";
 
-type NationaltySelectProps = {
+type GenreSelectProps = {
   id: string;
   name: string;
-  selector: 'movies' | 'actors';
   defaultValue?: string;
   onSelect: (value: string, name: string) => void;
 };
 
-type country = {
-  nationality: string;
+type genre = {
+  genre: string;
 };
 
-export function NationalitySelect({
+export function GenreSelect({
   id,
   name,
   defaultValue,
-  selector,
   onSelect,
-}: NationaltySelectProps) {
+}: GenreSelectProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<string>(defaultValue ?? "");
-  const [countries, setCountries] = React.useState<country[]>([]);
+  const [genres, setGenres] = React.useState<genre[]>([]);
 
   useEffect(() => {
-    switch (selector) {
-      case "actors":
-        Actor.nationalities().then((nat) => setCountries(nat));
-        break;
-      case "movies":
-        Movie.nationalities().then((nat) => setCountries(nat));
-        break;
-    }
+    Movie.genres().then((dir) => setGenres(dir));
   }, []);
 
   return (
@@ -64,31 +54,31 @@ export function NationalitySelect({
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {value ? value : "Select country..."}
+          {value ? value : "Select genre..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search country..." className="h-10" />
+          <CommandInput placeholder="Search genre..." className="h-10" />
           <CommandList>
-            <CommandEmpty>No country found.</CommandEmpty>
+            <CommandEmpty>No genre found.</CommandEmpty>
             <CommandGroup>
-              {countries.map((country) => (
+              {genres.map((genre) => (
                 <CommandItem
-                  key={country.nationality}
-                  value={country.nationality}
+                  key={genre.genre}
+                  value={genre.genre}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
                     onSelect(currentValue, name);
                     setOpen(false);
                   }}
                 >
-                  {country.nationality}
+                  {genre.genre}
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === country.nationality
+                      value === genre.genre
                         ? "opacity-100"
                         : "opacity-0"
                     )}
