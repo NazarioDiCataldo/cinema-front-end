@@ -36,7 +36,7 @@ const MoviesPage = () => {
     });
   }, [searchParams]);
 
-  function searchActor(value: string): void {
+  function searchMovie(value: string): void {
     //Mi prendo il valore precedente
     setSearchParams((prev) => {
       //Mi creo un nuovo oggetto usando i query string disponbili
@@ -71,6 +71,9 @@ const MoviesPage = () => {
   }
 
   function orderBy(value: string): void {
+    //verifico prima se la stringa contiene il divisore
+    if (!value.includes(":")) return;
+
     //Gli ordini arrivano in questo formato nome_colonna:ordine
     //Splitto in base al divisore :
     //Destructuring per prendermi i due valori separati
@@ -119,7 +122,7 @@ const MoviesPage = () => {
             <SelectItem value="production_year:desc">More recent</SelectItem>
           </SelectContent>
         </Select>
-        <SearchBar onChange={searchActor} defaultValue={params.title} />
+        <SearchBar onChange={searchMovie} defaultValue={params.title} />
       </section>
 
       {/* Se la lista non viene ancora caricata, mostro lo skeleton come placeholder */}

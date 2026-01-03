@@ -54,29 +54,36 @@ const ActorFilters = ({ params, setParams }: ActorFiltersProps) => {
       onSubmit={applyFilters}
       id="actorsFilters"
     >
-      <div className="flex flex-col md:flex-row w-full gap-4">
-        {/* Da */}
-        <YearsSelect
-          years={yearsList}
-          defaultValue={params["birth_year_from"]?.toString()}
-          name="birth_year_from"
-          onSelect={addParam}
-        />
-        {/* A */}
-        <YearsSelect
-          years={yearsList.reverse()}
-          defaultValue={params["birth_year_to"]?.toString()}
-          name={"birth_year_to"}
+      <div className="w-full flex flex-col gap-2">
+        <label id="genre" className="font-medium">Production year</label>
+        <div className="flex flex-col md:flex-row w-full gap-4">
+          {/* Da */}
+          <YearsSelect
+            years={yearsList}
+            defaultValue={params["birth_year_from"]?.toString()}
+            name="birth_year_from"
+            onSelect={addParam}
+          />
+          {/* A */}
+          <YearsSelect
+            years={[...yearsList].reverse()}
+            defaultValue={params["birth_year_to"]?.toString()}
+            name={"birth_year_to"}
+            onSelect={addParam}
+          />
+        </div>
+      </div>
+      {/* Nazionalità */}
+      <div className="w-full flex flex-col gap-2">
+        <label id="nationality" className="font-medium">Nationality</label>
+        <NationalitySelect
+          id="nationality"
+          selector={'actors'}
+          name={"nationality"}
+          defaultValue={params["nationality"]}
           onSelect={addParam}
         />
       </div>
-      {/* Nazionalità */}
-      <NationalitySelect
-        selector={'actors'}
-        name={"nationality"}
-        defaultValue={params["nationality"]}
-        onSelect={addParam}
-      />
     </form>
   );
 };

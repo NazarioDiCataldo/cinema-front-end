@@ -11,34 +11,35 @@ export type MovieType = {
 };
 
 export type MovieParams = {
-    limit?: number;
-    order?: 'ASC' | 'DESC',
-    order_by?: string,
-    nationality?: string,
-    production_year_from?: number,
-    production_year_to?: number,
-    title?: string,
-    director?: string,
-    genre?: string,  
-}
+  limit?: number;
+  order?: "ASC" | "DESC";
+  order_by?: string;
+  nationality?: string;
+  production_year_from?: number;
+  production_year_to?: number;
+  title?: string;
+  director?: string;
+  genre?: string;
+};
 
 export class Movie {
   //Get all movies
   static async get(params: MovieParams = {}) {
-
     const queryParams = [];
 
     //Verifico se ci sono dei parametri
-    if(Object.keys(params).length) {
-        for(const [key, value] of Object.entries(params)) {
-            //Mi creo l'array di query params
-            queryParams.push(`${key}=${value}`);
-        }
+    if (Object.keys(params).length) {
+      for (const [key, value] of Object.entries(params)) {
+        //Mi creo l'array di query params
+        queryParams.push(`${key}=${value}`);
+      }
     }
 
     //Verifico se ci sono query params
     //Se ci sono, all'URL aggiungo tutti i query params tramite join
-    const url = queryParams.length ? `${import.meta.env.VITE_MOVIES_URL}?${queryParams.join('&')}` : `${import.meta.env.VITE_MOVIES_URL}`;
+    const url = queryParams.length
+      ? `${import.meta.env.VITE_MOVIES_URL}?${queryParams.join("&")}`
+      : `${import.meta.env.VITE_MOVIES_URL}`;
 
     const res = await fetch(url);
     const resJson = await res.json();
@@ -58,7 +59,9 @@ export class Movie {
   }
 
   static async minYear() {
-    const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/min_production_year`);
+    const res = await fetch(
+      `${import.meta.env.VITE_MOVIES_URL}/min_production_year`
+    );
     const resJson = await res.json();
 
     if (!resJson.success) {
@@ -68,26 +71,28 @@ export class Movie {
     return resJson.data;
   }
 
-  static async maxYear() { 
-      const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/max_production_year`);
-      const resJson = await res.json();
+  static async maxYear() {
+    const res = await fetch(
+      `${import.meta.env.VITE_MOVIES_URL}/max_production_year`
+    );
+    const resJson = await res.json();
 
-      if (!resJson.success) {
-        throw new Error("An error occured");
-      }
+    if (!resJson.success) {
+      throw new Error("An error occured");
+    }
 
-      return resJson.data;
+    return resJson.data;
   }
 
   //Funzione che raccoglie il massimo e il minimo degli anno di produzione e restituise un array
   static async rangeYear() {
-    const minYear: {min: number} = await Movie.minYear();
-    const maxYear: {max: number} = await Movie.maxYear();
+    const minYear: { min: number } = await Movie.minYear();
+    const maxYear: { max: number } = await Movie.maxYear();
 
     return {
       ...minYear,
       ...maxYear,
-    }
+    };
   }
 
   static async genres() {
@@ -118,6 +123,17 @@ export class Movie {
 
     if (!resJson.success) {
       throw new Error("Movie not found");
+    }
+
+    return resJson.data;
+  }
+
+  static async actors(id: string) {
+    const res = await fetch(`${import.meta.env.VITE_MOVIES_URL}/${id}/actors`);
+    const resJson = await res.json();
+
+    if (!resJson.success) {
+      throw new Error("Actors not found");
     }
 
     return resJson.data;

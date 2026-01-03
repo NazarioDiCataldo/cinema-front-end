@@ -11,11 +11,11 @@ import {
   AlertDialogTrigger,
 } from "./alert-dialog";
 
-type DeleteActorProps = {
+type DeleteResourceProps = {
   trigger: JSX.Element;
 };
 
-const DeleteActor = ({ trigger }: DeleteActorProps) => {
+const DeleteResource = ({ trigger }: DeleteResourceProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>{trigger}</AlertDialogTrigger>
@@ -36,4 +36,4 @@ const DeleteActor = ({ trigger }: DeleteActorProps) => {
   );
 };
 
-export default DeleteActor;
+export default DeleteResource;

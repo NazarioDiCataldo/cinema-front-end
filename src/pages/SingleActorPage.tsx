@@ -1,26 +1,32 @@
+import AvatarsList from "@/components/AvatarsList";
 import { Button } from "@/components/ui/button";
-import DeleteActor from "@/components/ui/DeleteActor";
+import DeleteResource from "@/components/ui/DeleteResource";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Actor, type ActorType } from "@/lib/Actor";
-import { Pen, Trash2 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { type MovieType } from "@/lib/Movie";
+import { ArrowLeft, Pen, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 
 const SingleActorPage = () => {
   const params = useParams();
   const [actor, setActor] = useState<ActorType>();
+  const [movies, setMovies] = useState<MovieType[]>([])
   const navigate = useNavigate();
 
   useEffect(() => {
     Actor.single(params.id!)
       .then((actor) => setActor(actor))
       .catch(() => navigate("/actors"));
+
+    //Get dei film collegati all'attore
+    Actor.movies(params.id!).then((movies) => setMovies(movies));
   }, [params.id]);
 
   if (!actor) {
     return (
       <main className="container">
-        <section className="flex gap-8">
+        <section className="flex  flex-wrap lg:flex-nowrap gap-8">
           <Skeleton className="h-100 w-1/2 bg-gray-500" />
           <div className="w-1/2 flex flex-col gap-4">
             <Skeleton className="h-16 bg-gray-500" />
@@ -33,6 +39,10 @@ const SingleActorPage = () => {
 
   return (
     <main className="container">
+      <Link className="text-primary underline w-max flex gap-1 items-center" to={'/actors'}>
+        <ArrowLeft className="size-5" />
+        Return to actors
+      </Link>
       <section className="flex gap-8">
         <picture className="w-1/2 aspect-square">
           <img
@@ -46,8 +56,11 @@ const SingleActorPage = () => {
           <p>
             <strong>Birthday year</strong>: {actor.birth_year}
           </p>
+          <p>
+            <strong>Nationality</strong>: {actor.nationality}
+          </p>
           <div className="flex flex-col lg:flex-row gap-4">
-            <DeleteActor
+            <DeleteResource
               trigger={
                 <Button size={"lg"} variant={"destructive"}>
                   <Trash2 />
@@ -66,6 +79,7 @@ const SingleActorPage = () => {
               </Button>
             </Link>
           </div>
+          {movies.length > 0 && <AvatarsList title="Filmography" list={movies} route={'movies'} />}
         </aside>
       </section>
     </main>

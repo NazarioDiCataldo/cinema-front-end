@@ -104,7 +104,7 @@ const MovieFilters = ({ params, setParams }: MovieFiltersProps) => {
           to
           {/* A */}
           <YearsSelect
-            years={yearsList.reverse()}
+            years={[...yearsList].reverse()}
             defaultValue={params["production_year_to"]?.toString()}
             name={"production_year_to"}
             onSelect={addParam}

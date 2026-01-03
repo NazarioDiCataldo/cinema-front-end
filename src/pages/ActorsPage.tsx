@@ -72,6 +72,8 @@ const ActorsPage = () => {
   }
 
   function orderBy(value: string): void {
+    if (!value.includes(":")) return;
+
     //Gli ordini arrivano in questo formato nome_colonna:ordine
     //Splitto in base al divisore :
     //Destructuring per prendermi i due valori separati
