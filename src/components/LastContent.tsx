@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Movie, type MovieType } from "@/lib/Movie";
 import { Loader2 } from "lucide-react";
+import { Hall } from "@/lib/Hall";
 
 type LastContentProps = {
   name: "actors" | "movies" | "halls";
@@ -30,6 +31,10 @@ const LastContent = ({ name, limit, order }: LastContentProps) => {
 
         case "movies":
           setList(await Movie.get({ limit, order }));
+          break;
+
+        case "halls":
+          setList(await Hall.get({ limit, order }));
           break;
       }
     }
@@ -54,7 +59,7 @@ const LastContent = ({ name, limit, order }: LastContentProps) => {
             {list.map((elem: MovieType | ActorType, index) => (
               <Link
                 to={`/${name}/${elem.id}`}
-                className="flex min-w-0 shrink-0 grow-0 basis-full md:basis-1/2 lg:basis-1/3"
+                className="flex min-w-0 shrink-0 grow-0 basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
               >
                 <CarouselItem key={index}>
                   <div className="p-1">

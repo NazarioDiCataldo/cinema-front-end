@@ -3,14 +3,17 @@ import type { MovieType } from "@/lib/Movie";
 import { Link } from "react-router";
 import { AnimatedList } from "./ui/animated-list";
 import { cn } from "@/lib/utils";
+import type { ProjectionType } from "@/lib/Projection";
+import { useEffect } from "react";
 
 type AvatarsListProps = {
   title: string;
-  route: "actors" | "movies";
-  list: MovieType[] | ActorType[];
+  route: "actors" | "movies" | "projections";
+  list: MovieType[] | ActorType[] | ProjectionType[];
 };
 
 const AvatarsList = ({ title, list, route }: AvatarsListProps) => {
+  
   return (
     <div className="flex flex-col gap-4 mt-4 max-w-100">
       <h2 className="text-2xl text-primary font-medium">{title}</h2>
@@ -32,19 +35,26 @@ const AvatarsList = ({ title, list, route }: AvatarsListProps) => {
                 <div className="flex size-12 items-center justify-center rounded-2xl">
                   <img
                     className="size-12 aspect-square rounded-full object-cover"
-                    alt={`Picture about ${elem.image_path}`}
-                    src={elem.image_path}
+                    alt={`Picture about ${elem.image_path ?? elem.movie.title}`}
+                    src={elem.image_path ?? elem.movie.image_path}
                   />
                 </div>
                 <div className="flex flex-col overflow-hidden">
                   <figcaption className="flex flex-row items-center text-lg font-medium whitespace-pre dark:text-white">
                     <span className="text-sm sm:text-lg">
-                      {elem.name ?? elem.title}
+                      {elem.name ?? elem.title ?? elem.movie.title}
                     </span>
                   </figcaption>
+                  {/* Anno di produzione dei film */}
                   {elem.production_year && (
                     <p className="text-sm font-normal dark:text-white/60">
                       {elem.production_year}
+                    </p>
+                  )}
+                  {/* Data di proiezione del film*/}
+                  {elem.projection_date && (
+                    <p className="text-sm font-normal dark:text-white/60">
+                      <strong>Projection date</strong>: {elem.projection_date}
                     </p>
                   )}
                 </div>

@@ -7,6 +7,7 @@ const HomePage = () => {
         <Hero />
         <LastContent name='actors' limit={5} order='DESC' />
         <LastContent name='movies' limit={5} order='DESC' />
+        <LastContent name='halls' limit={5} order='DESC' />
     </main>
   )
 }

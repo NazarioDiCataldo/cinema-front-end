@@ -9,6 +9,8 @@ import ActorsPage from "./pages/ActorsPage";
 import SingleActorPage from "./pages/SingleActorPage";
 import MoviesPage from "./pages/MoviesPage";
 import SingleMoviePage from "./pages/SingleMoviePage";
+import HallsPage from "./pages/HallsPage";
+import SingleHallPage from "./pages/SingleHallPage";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,19 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: '/halls',
+        children: [
+          {
+            index: true,
+            element: <HallsPage />
+          },
+          {
+            path: ":id",
+            element: <SingleHallPage />
+          }
+        ]
+      }
     ],
   },
 ]);
