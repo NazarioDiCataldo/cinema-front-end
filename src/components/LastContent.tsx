@@ -1,5 +1,4 @@
 import { Actor, type ActorType } from "@/lib/Actor";
-import { Card, CardContent } from "./ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -12,6 +11,7 @@ import { Link } from "react-router";
 import { Movie, type MovieType } from "@/lib/Movie";
 import { Loader2 } from "lucide-react";
 import { Hall } from "@/lib/Hall";
+import CardComponent from "./ui/CardComponent";
 
 type LastContentProps = {
   name: "actors" | "movies" | "halls";
@@ -63,26 +63,14 @@ const LastContent = ({ name, limit, order }: LastContentProps) => {
               >
                 <CarouselItem key={index}>
                   <div className="p-1">
-                    <Card className="p-0 cursor-pointer">
-                      <CardContent className="flex flex-col aspect-square items-start justify-start p-0">
-                        <picture className="w-full h-64">
-                          <img
-                            className="w-full h-full object-cover"
-                            src={elem.image_path}
-                          />
-                        </picture>
-                        <h3 className="text-xl text-primary text-center lg:text-left font-semibold p-6">
-                          {elem.name ?? elem.title}
-                        </h3>
-                      </CardContent>
-                    </Card>
+                    <CardComponent elem={elem} name={name} />
                   </div>
                 </CarouselItem>
               </Link>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden lg:flex" />
-          <CarouselNext className="hidden lg:flex" />
+          <CarouselPrevious className="hidden lg:flex" size={'icon-lg'} />
+          <CarouselNext className="hidden lg:flex" size={'icon-lg'} />
         </Carousel>
       ) : (
         <Loader2 className="animate-spin text-primary size-12" />
@@ -92,3 +80,4 @@ const LastContent = ({ name, limit, order }: LastContentProps) => {
 };
 
 export default LastContent;
+
