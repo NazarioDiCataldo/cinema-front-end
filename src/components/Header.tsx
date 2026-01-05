@@ -8,7 +8,9 @@ import { Link, NavLink } from "react-router";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
-import { Menu } from "lucide-react";
+import { Menu, MoonIcon, SunIcon } from "lucide-react";
+import { Switch } from "./ui/switch";
+import { useTheme } from "@/contexts/Theme";
 
 export type NavigationType = {
   title: string;
@@ -37,6 +39,8 @@ const navigation: NavigationType[] = [
 const Header = () => {
   const id = useId(); //Hook che genera id
 
+  const themeContext = useTheme();
+
   function renderNavLink(element: NavigationType): JSX.Element {
     return (
       <NavLink
@@ -54,7 +58,7 @@ const Header = () => {
   }
 
   return (
-    <header className="border-b border-secondary bg-white">
+    <header className="border-b border-secondary bg-muted">
       <div className="container p-4 flex items-center justify-between">
         <Link to={"/"} className="block size-12">
           <picture>
@@ -79,9 +83,7 @@ const Header = () => {
               <nav className="px-6 pt-16">
                 <ul className="flex flex-col gap-6">
                   {navigation.map((element: NavigationType) => (
-                    <li key={id + element.title}>
-                      {renderNavLink(element)}
-                    </li>
+                    <li key={id + element.title}>{renderNavLink(element)}</li>
                   ))}
                 </ul>
               </nav>
@@ -101,6 +103,14 @@ const Header = () => {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
+        <label className="flex items-center gap-2 select-none">
+          <SunIcon className="size-4" />
+          <Switch
+            checked={themeContext?.theme === "dark"}
+            onCheckedChange={themeContext?.toggleTheme}
+          />{" "}
+          <MoonIcon className="size-4" />
+        </label>
       </div>
     </header>
   );

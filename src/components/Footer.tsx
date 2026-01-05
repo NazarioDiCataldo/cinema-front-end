@@ -2,8 +2,8 @@ import { Github, Globe, Instagram } from "lucide-react"
 
 const Footer = () => {
   return (
-    <footer className='w-full bg-blue-950'>
-        <div className='container p-4 flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-4 text-secondary'>
+    <footer className='w-full text-muted dark:text-foreground bg-chart-5 dark:bg-muted'>
+        <div className='container p-4 flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-4'>
             <p className='text-center'>
                 Copyright © {new Date().getFullYear()}. Nazario Di Cataldo. Progetto realizzato per fini scolastici
             </p>

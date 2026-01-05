@@ -11,6 +11,8 @@ import MoviesPage from "./pages/MoviesPage";
 import SingleMoviePage from "./pages/SingleMoviePage";
 import HallsPage from "./pages/HallsPage";
 import SingleHallPage from "./pages/SingleHallPage";
+import ThemeProvider from "./contexts/Theme";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -43,29 +45,35 @@ const router = createBrowserRouter([
           },
           {
             path: ":id",
-            element: <SingleMoviePage />
+            element: <SingleMoviePage />,
           },
         ],
       },
       {
-        path: '/halls',
+        path: "/halls",
         children: [
           {
             index: true,
-            element: <HallsPage />
+            element: <HallsPage />,
           },
           {
             path: ":id",
-            element: <SingleHallPage />
-          }
-        ]
-      }
+            element: <SingleHallPage />,
+          },
+        ],
+      },
     ],
-  },
+  }, 
+  {
+    path: '*',
+    element: <NotFoundPage />
+  }
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>
 );
