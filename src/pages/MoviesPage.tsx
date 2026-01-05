@@ -3,13 +3,7 @@ import Grid, { SkeletonGrid } from "@/components/Grid";
 import MovieFilters from "@/components/MovieFilters";
 import NotFound from "@/components/NotFound";
 import SearchBar from "@/components/SearchBar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import { Movie, type MovieParams, type MovieType } from "@/lib/Movie";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
@@ -110,18 +104,14 @@ const MoviesPage = () => {
           }
           form={<MovieFilters params={params} setParams={setSearchParams} />}
         />
-        <Select onValueChange={orderBy}>
-          <SelectTrigger className="w-full lg:w-50">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="id:asc">Default order</SelectItem>
-            <SelectItem value="title:asc">Ascending order</SelectItem>
-            <SelectItem value="title:desc">Descending order</SelectItem>
-            <SelectItem value="production_year:asc">Less recent</SelectItem>
-            <SelectItem value="production_year:desc">More recent</SelectItem>
-          </SelectContent>
-        </Select>
+        <NativeSelect onChange={(e: React.ChangeEvent<HTMLSelectElement>) => orderBy(e.currentTarget.value)} className="w-full lg:w-50">
+          <NativeSelectOption value="">Select order</NativeSelectOption>
+          <NativeSelectOption value="id:asc">Default order</NativeSelectOption>
+          <NativeSelectOption value="title:asc">Ascending order</NativeSelectOption>
+          <NativeSelectOption value="title:desc">Descending order</NativeSelectOption>
+          <NativeSelectOption value="production_year:asc">Less places</NativeSelectOption>
+          <NativeSelectOption value="production_year:desc">More places</NativeSelectOption>
+        </NativeSelect>
         <SearchBar onChange={searchMovie} defaultValue={params.title} />
       </section>
 

@@ -3,13 +3,7 @@ import Filters from "@/components/Filters";
 import Grid, { SkeletonGrid } from "@/components/Grid";
 import NotFound from "@/components/NotFound";
 import SearchBar from "@/components/SearchBar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import { Actor, type ActorParams, type ActorType } from "@/lib/Actor";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
@@ -100,7 +94,7 @@ const ActorsPage = () => {
       <section className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-center">
         <p className="text-center lg:text-left">{actors.length} actors found</p>
         <Filters
-          submit={'actorFilters'}
+          submit={"actorFilters"}
           clear={clearFilters}
           applied={
             Object.keys(params).filter(
@@ -110,16 +104,12 @@ const ActorsPage = () => {
           }
           form={<ActorFilters params={params} setParams={setSearchParams} />}
         />
-        <Select onValueChange={orderBy}>
-          <SelectTrigger className="w-full lg:w-50">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="id:asc">Default order</SelectItem>
-            <SelectItem value="name:asc">Ascending order</SelectItem>
-            <SelectItem value="name:desc">Descending order</SelectItem>
-          </SelectContent>
-        </Select>
+        <NativeSelect onChange={(e: React.ChangeEvent<HTMLSelectElement>) => orderBy(e.currentTarget.value)} className="w-full lg:w-50">
+          <NativeSelectOption value="" >Select order</NativeSelectOption>
+          <NativeSelectOption value="id:asc">Default order</NativeSelectOption>
+          <NativeSelectOption value="name:asc">Ascending order</NativeSelectOption>
+          <NativeSelectOption value="name:desc">Descending order</NativeSelectOption>
+        </NativeSelect>
         <SearchBar onChange={searchActor} defaultValue={params.name} />
       </section>
 

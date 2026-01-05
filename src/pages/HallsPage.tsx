@@ -3,7 +3,7 @@ import Grid, { SkeletonGrid } from "@/components/Grid";
 import HallFilters from "@/components/HallFilters";
 import NotFound from "@/components/NotFound";
 import SearchBar from "@/components/SearchBar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import { Hall, type HallParams, type HallType } from "@/lib/Hall";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
@@ -45,6 +45,7 @@ const HallsPage = () => {
   }
 
   function orderBy(value: string): void {
+    console.log(value)
     //verifico prima se la stringa contiene il divisore
     if (!value.includes(":")) return;
 
@@ -104,18 +105,14 @@ const HallsPage = () => {
           }
           form={<HallFilters params={params} setParams={setSearchParams} />}
         />
-        <Select onValueChange={orderBy}>
-          <SelectTrigger className="w-full lg:w-50">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="id:asc">Default order</SelectItem>
-            <SelectItem value="name:asc">Ascending order</SelectItem>
-            <SelectItem value="name:desc">Descending order</SelectItem>
-            <SelectItem value="place:asc">Less places</SelectItem>
-            <SelectItem value="place:desc">More places</SelectItem>
-          </SelectContent>
-        </Select>
+        <NativeSelect onChange={(e: React.ChangeEvent<HTMLSelectElement>) => orderBy(e.currentTarget.value)} className="w-full lg:w-50">
+          <NativeSelectOption value="">Select order</NativeSelectOption>
+          <NativeSelectOption value="id:asc">Default order</NativeSelectOption>
+          <NativeSelectOption value="name:asc">Ascending order</NativeSelectOption>
+          <NativeSelectOption value="name:desc">Descending order</NativeSelectOption>
+          <NativeSelectOption value="place:asc">Less places</NativeSelectOption>
+          <NativeSelectOption value="place:desc">More places</NativeSelectOption>
+        </NativeSelect>
         <SearchBar onChange={searchHall} defaultValue={params.name} />
       </section>
 
