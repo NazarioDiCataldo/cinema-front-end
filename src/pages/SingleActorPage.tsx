@@ -1,17 +1,15 @@
 import AvatarsList from "@/components/AvatarsList";
-import { Button } from "@/components/ui/button";
-import DeleteResource from "@/components/ui/DeleteResource";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Actor, type ActorType } from "@/lib/Actor";
 import { type MovieType } from "@/lib/Movie";
-import { ArrowLeft, Pen, Trash2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 
 const SingleActorPage = () => {
   const params = useParams();
   const [actor, setActor] = useState<ActorType>();
-  const [movies, setMovies] = useState<MovieType[]>([])
+  const [movies, setMovies] = useState<MovieType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,7 +37,10 @@ const SingleActorPage = () => {
 
   return (
     <main className="container">
-      <Link className="text-primary underline w-max flex gap-1 items-center" to={'/actors'}>
+      <Link
+        className="text-primary underline w-max flex gap-1 items-center"
+        to={"/actors"}
+      >
         <ArrowLeft className="size-5" />
         Return to actors
       </Link>
@@ -59,27 +60,9 @@ const SingleActorPage = () => {
           <p>
             <strong>Nationality</strong>: {actor.nationality}
           </p>
-          <div className="flex flex-col lg:flex-row gap-4">
-            <DeleteResource
-              trigger={
-                <Button size={"lg"} variant={"destructive"}>
-                  <Trash2 />
-                  Delete
-                </Button>
-              }
-            />
-            <Link to={`/actors/${actor.id}/update`}>
-              <Button
-                size={"lg"}
-                variant={"outline"}
-                className={"w-max shadow-xl"}
-              >
-                <Pen />
-                Edit actor
-              </Button>
-            </Link>
-          </div>
-          {movies.length > 0 && <AvatarsList title="Filmography" list={movies} route={'movies'} />}
+          {movies.length > 0 && (
+            <AvatarsList title="Filmography" list={movies} route={"movies"} />
+          )}
         </aside>
       </section>
     </main>

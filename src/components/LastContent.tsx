@@ -9,9 +9,9 @@ import {
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Movie, type MovieType } from "@/lib/Movie";
-import { Loader2 } from "lucide-react";
 import { Hall } from "@/lib/Hall";
 import CardComponent from "./ui/CardComponent";
+import { SkeletonGrid } from "./Grid";
 
 type LastContentProps = {
   name: "actors" | "movies" | "halls";
@@ -73,7 +73,7 @@ const LastContent = ({ name, limit, order }: LastContentProps) => {
           <CarouselNext className="hidden lg:flex" size={'icon-lg'} />
         </Carousel>
       ) : (
-        <Loader2 className="animate-spin text-primary size-12" />
+        <SkeletonGrid iteration={4} />
       )}
     </section>
   );

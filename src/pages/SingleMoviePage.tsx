@@ -1,10 +1,8 @@
 import AvatarsList from "@/components/AvatarsList";
-import { Button } from "@/components/ui/button";
-import DeleteResource from "@/components/ui/DeleteResource";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { ActorType } from "@/lib/Actor";
 import { Movie, type MovieType } from "@/lib/Movie";
-import { ArrowLeft, Pen, Trash2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 
@@ -24,7 +22,7 @@ const SingleMoviePage = () => {
     Movie.actors(params.id!).then((actors) => setActors(actors));
   }, [params.id]);
 
-  if (!Movie) {
+  if (!movie) {
     return (
       <main className="container">
         <section className="flex gap-8">
@@ -68,27 +66,9 @@ const SingleMoviePage = () => {
           <p>
             <strong>Director</strong>: {movie?.director}
           </p>
-          <div className="flex flex-col lg:flex-row gap-4">
-            <DeleteResource
-              trigger={
-                <Button size={"lg"} variant={"destructive"}>
-                  <Trash2 />
-                  Delete
-                </Button>
-              }
-            />
-            <Link to={`/Movies/${movie?.id}/update`}>
-              <Button
-                size={"lg"}
-                variant={"outline"}
-                className={"w-max shadow-xl"}
-              >
-                <Pen />
-                Edit Movie
-              </Button>
-            </Link>
-          </div>
-          {actors.length > 0 && <AvatarsList title="Casting" list={actors} route={'actors'} />}
+          {actors.length > 0 && (
+            <AvatarsList title="Casting" list={actors} route={"actors"} />
+          )}
         </aside>
       </section>
     </main>
