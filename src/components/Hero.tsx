@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <section className="w-full min-h-screen lg:max-h-screen bg-gray-200 relative">
       <picture className="w-full min-h-screen lg:max-h-screen">
-        <img className="w-full min-h-screen lg:max-h-screen object-cover" src="./uploads/hollywood.jpg" />
+        <img className="w-full min-h-screen lg:max-h-screen object-cover" src="./uploads/hollywood.jpg" alt="Image about the Hollywood Hill with its famous sign." />
       </picture>
       <div className="absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-full px-4 md:w-md lg:w-2xl">
         <div className="text-center text-white flex flex-col items-center gap-4">
