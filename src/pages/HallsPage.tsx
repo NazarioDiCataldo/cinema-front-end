@@ -3,7 +3,10 @@ import Grid, { SkeletonGrid } from "@/components/Grid";
 import HallFilters from "@/components/HallFilters";
 import NotFound from "@/components/NotFound";
 import SearchBar from "@/components/SearchBar";
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
 import { Hall, type HallParams, type HallType } from "@/lib/Hall";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
@@ -20,7 +23,6 @@ const HallsPage = () => {
   const params: HallParams = Object.fromEntries(
     searchParams.entries()
   ) as HallParams;
-
 
   useEffect(() => {
     setLoader(true);
@@ -88,9 +90,10 @@ const HallsPage = () => {
   }
 
   //Variabili per il valore di default della select dell'ordinamento
-  const defaultOrderBy = params.order_by ?? searchParams.get('order_by')!; //Prende il query params dall'url, se esisite, altrimenti dall'oggetto searchParams che sicuramente avrà il parametro, visto che glielo imposto manualmente
-  const defaultOrder = (params.order ?? searchParams.get('order')!).toLowerCase();
-
+  const defaultOrderBy = params.order_by ?? searchParams.get("order_by")!; //Prende il query params dall'url, se esisite, altrimenti dall'oggetto searchParams che sicuramente avrà il parametro, visto che glielo imposto manualmente
+  const defaultOrder = (
+    params.order ?? searchParams.get("order")!
+  ).toLowerCase();
 
   return (
     <main className="container">
@@ -110,13 +113,25 @@ const HallsPage = () => {
           }
           form={<HallFilters params={params} setParams={setSearchParams} />}
         />
-        <NativeSelect defaultValue={`${defaultOrderBy}:${defaultOrder}`} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => orderBy(e.currentTarget.value)} className="w-full lg:w-50">
+        <NativeSelect
+          defaultValue={`${defaultOrderBy}:${defaultOrder}`}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            orderBy(e.currentTarget.value)
+          }
+          className="w-full lg:w-50"
+        >
           <NativeSelectOption value="">Select order</NativeSelectOption>
           <NativeSelectOption value="id:asc">Default order</NativeSelectOption>
-          <NativeSelectOption value="name:asc">Ascending order</NativeSelectOption>
-          <NativeSelectOption value="name:desc">Descending order</NativeSelectOption>
+          <NativeSelectOption value="name:asc">
+            Ascending order
+          </NativeSelectOption>
+          <NativeSelectOption value="name:desc">
+            Descending order
+          </NativeSelectOption>
           <NativeSelectOption value="place:asc">Less places</NativeSelectOption>
-          <NativeSelectOption value="place:desc">More places</NativeSelectOption>
+          <NativeSelectOption value="place:desc">
+            More places
+          </NativeSelectOption>
         </NativeSelect>
         <SearchBar onChange={searchHall} defaultValue={params.name} />
       </section>

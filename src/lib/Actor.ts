@@ -54,12 +54,49 @@ export class Actor {
     return resJson.data;
   }
 
-  static async movies(id: string) {
+  static async minYear() {
+    const res = await fetch(
+      `${import.meta.env.VITE_ACTORS_URL}/min_birth_year`
+    );
+    const resJson = await res.json();
+
+    if (!resJson.success) {
+      throw new Error("An error occured");
+    }
+
+    return resJson.data;
+  }
+
+  static async maxYear() {
+    const res = await fetch(
+      `${import.meta.env.VITE_ACTORS_URL}/max_birth_year`
+    );
+    const resJson = await res.json();
+
+    if (!resJson.success) {
+      throw new Error("An error occured");
+    }
+
+    return resJson.data;
+  }
+
+  //Funzione che raccoglie il massimo e il minimo degli anno di nascita e restituise un array
+  static async rangeYear() {
+    const minYear: { min: number } = await Actor.minYear();
+    const maxYear: { max: number } = await Actor.maxYear();
+
+    return {
+      ...minYear,
+      ...maxYear,
+    };
+  }
+
+  static async movie(id: string) {
     const res = await fetch(`${import.meta.env.VITE_ACTORS_URL}/${id}/movies`);
     const resJson = await res.json();
 
     if (!resJson.success) {
-      throw new Error("Movies not found");
+      throw new Error("ACTORS not found");
     }
 
     return resJson.data;

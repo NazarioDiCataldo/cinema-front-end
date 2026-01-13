@@ -3,7 +3,10 @@ import Filters from "@/components/Filters";
 import Grid, { SkeletonGrid } from "@/components/Grid";
 import NotFound from "@/components/NotFound";
 import SearchBar from "@/components/SearchBar";
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
 import { Actor, type ActorParams, type ActorType } from "@/lib/Actor";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
@@ -86,6 +89,12 @@ const ActorsPage = () => {
     });
   }
 
+  //Variabili per il valore di default della select dell'ordinamento
+  const defaultOrderBy = params.order_by ?? searchParams.get("order_by")!; //Prende il query params dall'url, se esisite, altrimenti dall'oggetto searchParams che sicuramente avrà il parametro, visto che glielo imposto manualmente
+  const defaultOrder = (
+    params.order ?? searchParams.get("order")!
+  ).toLowerCase();
+
   return (
     <main className="container flex flex-col gap-8">
       <h1 className="text-4xl font-semibold text-primary text-center lg:text-left">
@@ -104,11 +113,21 @@ const ActorsPage = () => {
           }
           form={<ActorFilters params={params} setParams={setSearchParams} />}
         />
-        <NativeSelect onChange={(e: React.ChangeEvent<HTMLSelectElement>) => orderBy(e.currentTarget.value)} className="w-full lg:w-50">
-          <NativeSelectOption value="" >Select order</NativeSelectOption>
+        <NativeSelect
+          defaultValue={`${defaultOrderBy}:${defaultOrder}`}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            orderBy(e.currentTarget.value)
+          }
+          className="w-full lg:w-50"
+        >
+          <NativeSelectOption value="">Select order</NativeSelectOption>
           <NativeSelectOption value="id:asc">Default order</NativeSelectOption>
-          <NativeSelectOption value="name:asc">Ascending order</NativeSelectOption>
-          <NativeSelectOption value="name:desc">Descending order</NativeSelectOption>
+          <NativeSelectOption value="name:asc">
+            Ascending order
+          </NativeSelectOption>
+          <NativeSelectOption value="name:desc">
+            Descending order
+          </NativeSelectOption>
         </NativeSelect>
         <SearchBar onChange={searchActor} defaultValue={params.name} />
       </section>

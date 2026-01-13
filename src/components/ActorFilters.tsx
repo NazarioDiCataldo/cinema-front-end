@@ -1,8 +1,8 @@
-import type { ActorParams } from "@/lib/Actor";
+import { Actor, type ActorParams } from "@/lib/Actor";
 import YearsSelect from "./ui/YearsSelect";
-import { useState, type FormEvent } from "react";
-import { NationalitySelect } from "./ui/NationalitySelect";
+import { useEffect, useState, type FormEvent } from "react";
 import type { SetURLSearchParams } from "react-router";
+import { FilterSelect } from "./ui/FilterSelect";
 
 type ActorFiltersProps = {
   params: ActorParams;
@@ -11,11 +11,22 @@ type ActorFiltersProps = {
 
 const ActorFilters = ({ params, setParams }: ActorFiltersProps) => {
   const [data, setData] = useState<ActorParams>({});
+  const [yearsList, setYearsList] = useState<string[]>([]);
 
-  const yearsList = Array.from(
-    { length: 125 },
-    (_, i) => new Date().getFullYear() - i
-  ).map((elem) => elem.toString());
+  useEffect(() => {
+    Actor.rangeYear()
+      .then(({ min, max }) => {
+        const years = [];
+
+        //Creo un array con tutte le date, dalla minima a quella di odierna
+        for (let i = min; i <= max; i++) {
+          years.push(i.toString());
+        }
+
+        setYearsList(years);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   function addParam(value: string | number, name: string): void {
     setData({
@@ -55,7 +66,9 @@ const ActorFilters = ({ params, setParams }: ActorFiltersProps) => {
       id="actorsFilters"
     >
       <div className="w-full flex flex-col gap-2">
-        <label id="genre" className="font-medium">Production year</label>
+        <label id="genre" className="font-medium">
+          Birth year
+        </label>
         <div className="flex flex-col md:flex-row w-full gap-4">
           {/* Da */}
           <YearsSelect
@@ -75,11 +88,14 @@ const ActorFilters = ({ params, setParams }: ActorFiltersProps) => {
       </div>
       {/* Nazionalità */}
       <div className="w-full flex flex-col gap-2">
-        <label id="nationality" className="font-medium">Nationality</label>
-        <NationalitySelect
-          id="nationality"
-          selector={'actors'}
-          name={"nationality"}
+        <label id="nationality" className="font-medium">
+          Nationality
+        </label>
+        <FilterSelect
+          filter={{
+            selector: "actors",
+            name: "nationality",
+          }}
           defaultValue={params["nationality"]}
           onSelect={addParam}
         />

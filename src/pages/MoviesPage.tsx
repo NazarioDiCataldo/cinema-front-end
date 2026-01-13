@@ -3,7 +3,10 @@ import Grid, { SkeletonGrid } from "@/components/Grid";
 import MovieFilters from "@/components/MovieFilters";
 import NotFound from "@/components/NotFound";
 import SearchBar from "@/components/SearchBar";
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
 import { Movie, type MovieParams, type MovieType } from "@/lib/Movie";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
@@ -86,6 +89,12 @@ const MoviesPage = () => {
     });
   }
 
+  //Variabili per il valore di default della select dell'ordinamento
+  const defaultOrderBy = params.order_by ?? searchParams.get("order_by")!; //Prende il query params dall'url, se esisite, altrimenti dall'oggetto searchParams che sicuramente avrà il parametro, visto che glielo imposto manualmente
+  const defaultOrder = (
+    params.order ?? searchParams.get("order")!
+  ).toLowerCase();
+
   return (
     <main className="container">
       <h1 className="text-4xl font-semibold text-primary text-center lg:text-left">
@@ -94,7 +103,7 @@ const MoviesPage = () => {
       <section className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-center">
         <p className="text-center lg:text-left">{movies.length} movies found</p>
         <Filters
-          submit={'movieFilters'}
+          submit={"movieFilters"}
           clear={clearFilters}
           applied={
             Object.keys(params).filter(
@@ -104,13 +113,27 @@ const MoviesPage = () => {
           }
           form={<MovieFilters params={params} setParams={setSearchParams} />}
         />
-        <NativeSelect onChange={(e: React.ChangeEvent<HTMLSelectElement>) => orderBy(e.currentTarget.value)} className="w-full lg:w-50">
+        <NativeSelect
+          defaultValue={`${defaultOrderBy}:${defaultOrder}`}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            orderBy(e.currentTarget.value)
+          }
+          className="w-full lg:w-50"
+        >
           <NativeSelectOption value="">Select order</NativeSelectOption>
           <NativeSelectOption value="id:asc">Default order</NativeSelectOption>
-          <NativeSelectOption value="title:asc">Ascending order</NativeSelectOption>
-          <NativeSelectOption value="title:desc">Descending order</NativeSelectOption>
-          <NativeSelectOption value="production_year:asc">Less places</NativeSelectOption>
-          <NativeSelectOption value="production_year:desc">More places</NativeSelectOption>
+          <NativeSelectOption value="title:asc">
+            Ascending order
+          </NativeSelectOption>
+          <NativeSelectOption value="title:desc">
+            Descending order
+          </NativeSelectOption>
+          <NativeSelectOption value="production_year:asc">
+            Less places
+          </NativeSelectOption>
+          <NativeSelectOption value="production_year:desc">
+            More places
+          </NativeSelectOption>
         </NativeSelect>
         <SearchBar onChange={searchMovie} defaultValue={params.title} />
       </section>

@@ -1,9 +1,9 @@
 import { Hall, type HallParams } from "@/lib/Hall";
 import { useEffect, useState, type FormEvent } from "react";
 import type { SetURLSearchParams } from "react-router";
-import { CitySelect } from "./ui/CitySelect";
 import { Field, FieldDescription, FieldTitle } from "./ui/field";
 import { Slider } from "./ui/slider";
+import { FilterSelect } from "./ui/FilterSelect";
 
 type HallFiltersProps = {
   params: HallParams;
@@ -13,7 +13,7 @@ type HallFiltersProps = {
 type Range = {
   min: number;
   max: number;
-}
+};
 
 const HallFilters = ({ params, setParams }: HallFiltersProps) => {
   const [data, setData] = useState<HallParams>({});
@@ -21,31 +21,29 @@ const HallFilters = ({ params, setParams }: HallFiltersProps) => {
   const [value, setValue] = useState<number[]>([]);
 
   useEffect(() => {
-
     Hall.rangePlaces().then(({ min, max }) => {
       //Imposto il range tramite il valore minimo e massimo
-      setRange({max, min});
+      setRange({ max, min });
       //Anche i valori dell'input, se sono definiti imposto quelli, altrimenti quelli massimi e minimi
       setValue([params.places_from ?? min, params.places_to ?? max]);
     });
   }, []);
 
   function addParam(value: string | number[], name: string | string[]): void {
-
     //Verifico prima se il i valori e il nome sono degli array
-    if(Array.isArray(value) && Array.isArray(name)) {
+    if (Array.isArray(value) && Array.isArray(name)) {
       let obj = {};
       //itero sull'array e creo un oggetto che viene passato al setState in un'unica soluzione
-      for(let i = 0; i<value.length; i++) {
+      for (let i = 0; i < value.length; i++) {
         obj = {
           ...obj,
           [name[i]]: value[i],
-        }
+        };
       }
 
       setData({
         ...data,
-        ...obj
+        ...obj,
       });
     } else {
       setData({
@@ -90,23 +88,30 @@ const HallFilters = ({ params, setParams }: HallFiltersProps) => {
         <label id="city" className="font-medium">
           City
         </label>
-        <CitySelect id="city" name="city" onSelect={addParam} defaultValue={params.city} />
+        <FilterSelect
+          filter={{
+            selector: "halls",
+            name: "city",
+          }}
+          defaultValue={params["city"]}
+          onSelect={addParam}
+        />
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex flex-col lg:items-center md:flex-row w-full gap-4">
           <Field>
-            <FieldTitle className="font-medium text-md">Places range</FieldTitle>
-            <FieldDescription>(
-              <span className="font-medium tabular-nums">
-                {value[0]}
-              </span> -{" "}
+            <FieldTitle className="font-medium text-md">
+              Places range
+            </FieldTitle>
+            <FieldDescription>
+              (<span className="font-medium tabular-nums">{value[0]}</span> -{" "}
               <span className="font-medium tabular-nums">{value[1]}</span>)
             </FieldDescription>
             <Slider
               value={value}
               onValueChange={(val) => {
                 setValue(val);
-                addParam(val, ['places_from', 'places_to']);
+                addParam(val, ["places_from", "places_to"]);
               }}
               max={range?.max}
               min={range?.min}
