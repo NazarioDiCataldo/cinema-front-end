@@ -10,12 +10,10 @@ const Hero = () => {
       <div className="absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-full px-4 md:w-md lg:w-2xl">
         <div className="text-center text-white flex flex-col items-center gap-4">
           <h1 className="text-4xl lg:text-5xl font-bold">
-            Project about a colletions of movies, actors and halls.
+            A project featuring collections of movies, actors, and cinemas.
           </h1>
           <h2 className="text-lg lg:text-xl font-medium">
-            Partial colletions about Hollywood stars and kolossal or cult
-            movies. Discover the world's most known halls. These lists will be
-            updated soon...
+            Curated selections of Hollywood stars and iconic blockbuster and cult movies. Discover some of the world’s most famous cinemas. These lists will be updated soon.
           </h2>
           <div className="flex flex-col-reverse lg:flex-row lg:justify-center w-full lg:w-max gap-2 mt-2">
             <Link to={"/movies"} className="block w-full">

@@ -60,11 +60,11 @@ const Header = () => {
   return (
     <header className="border-b border-secondary bg-muted">
       <div className="container p-4 flex items-center justify-between">
-        <Link to={"/"} className="block size-12">
+        <Link to={"/"} className="block w-30">
           <picture>
             <img
               className="w-full h-auto"
-              src="./vite.svg"
+              src="./uploads/cinescope.svg"
               alt="Ritorna alla Homepage"
               title="Ritorna alla Homepage"
             />
