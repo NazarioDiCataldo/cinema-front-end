@@ -29,6 +29,7 @@ const ActorFilters = ({ params, setParams }: ActorFiltersProps) => {
   }, []);
 
   function addParam(value: string | number, name: string): void {
+    console.log(value, name);
     setData({
       ...data,
       [name]: value,
@@ -36,7 +37,9 @@ const ActorFilters = ({ params, setParams }: ActorFiltersProps) => {
   }
 
   function applyFilters(e: FormEvent<HTMLFormElement>): void {
+    console.log("ciao");
     e.preventDefault();
+
 
     setParams((prev) => {
       //Mi creo un nuovo oggetto usando i query string disponbili
@@ -63,7 +66,7 @@ const ActorFilters = ({ params, setParams }: ActorFiltersProps) => {
     <form
       className="flex flex-col gap-6 items-start"
       onSubmit={applyFilters}
-      id="actorsFilters"
+      id="actorFilters"
     >
       <div className="w-full flex flex-col gap-2">
         <label id="genre" className="font-medium">
