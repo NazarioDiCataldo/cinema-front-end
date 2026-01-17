@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# Frontend – Cinescope 
+## Descrizione
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interfaccia web per la consultazione di collezioni di **film, attori e sale cinematografiche**, con filtri dinamici e navigazione avanzata.
+Il focus del frontend è sulla **gestione dello stato**, sulla **persistenza dei filtri via URL** e sull’uso corretto di **TypeScript** in un contesto reale.
 
-Currently, two official plugins are available:
+## Obiettivi
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* Creare un’interfaccia moderna e responsive
 
-## React Compiler
+* Gestire filtri combinabili e persistenti
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* Migliorare la qualità del codice con TypeScript
 
-## Expanding the ESLint configuration
+* Ridurre duplicazioni tramite componenti riutilizzabili
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* Applicare buone pratiche di UI/UX
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Stack utilizzato
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* **React** - Libreria per la costruzione dell'interfaccia 
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+* **Vite** - Tool di build e dev server
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+* **TypeScript** - Superset per rendere il codice più sicuro e leggibile
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+* **React Router** - Gestione della navigazione tra le pagine
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+* **Tailwind CSS** - Framework per lo styling
+
+* **shadcn/ui (Base UI)** - Libreria di componenti già pronti
+
+## Task principali
+
+* Routing per liste e pagine di dettaglio
+
+* Filtri dinamici per risorsa (film, attori, sale)
+
+* Persistenza dei filtri tramite search params
+
+* Refactoring di componenti duplicati
+
+* Creazione di componenti generici (Card, FilterSelect)
+
+* Gestione dark mode con Context API
+
+* Miglioramento del typing con union types e discriminated unions
+
+## Stato
+
+Progetto **funzionalmente completo** per consultazione e filtraggio dati.
+Le operazioni CRUD complete verranno implementate in futuro.
